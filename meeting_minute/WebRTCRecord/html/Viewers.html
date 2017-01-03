@@ -1,0 +1,83 @@
+﻿<!--
+//********************************************************
+//**  Version  : 1.00                                   **
+//**  detail   : 直播實況系統網頁-觀眾			        **
+//**  Engineer : 曾勖華	                                **
+//**  Release Date  : 2016/9/28                         **
+//**  Generate Date : 2016/9/28                         **
+//********************************************************
+-->
+<html>
+
+<center> 
+
+<head>
+
+	<!-- 設定標題 -->
+	<title>Viewers</title>
+	<meta charset="utf-8">
+	
+	<!-- 套用icon -->   
+    <link rel="shortcut icon" href="LiveVideo_icon.ico">
+
+	<!-- 載入JavaScript library -->
+	
+		<!-- jQuery -->
+		<script src="JS_modules/lib/jquery/jquery.min.js"></script>   
+
+</head>
+
+<body>
+    <div>         			
+		<!-- 標題 -->
+		<p> 觀眾-直播頁面: </p>
+		
+		<br> 
+		
+		User Name: <input id="TextBox" type="text" name="FirstName" value="Mickey">
+		
+		<input id="RegistrationButton" type="button" value="註冊" onclick="getTextBoxUserName()">
+		
+		<br>
+		
+		<br>
+		
+		<!-- 建立播放器物件 0 -->
+        <video id="myVideo0" controls="true" autoplay="flase" hidden>
+			<source src="temp/video0.webm"  id="webmSource0" type="video/webm">
+		</video>
+		
+		<!-- 建立播放器物件 1 -->
+		<video id="myVideo1" controls="true" autoplay="flase" hidden>
+			<source src="temp/video1.webm" id="webmSource1" type="video/webm">
+		</video>
+		
+        <hr />
+		
+		<!-- 重新連線 -->
+		<button onclick="javascript:window.location.reload()">重新連線</button>
+
+        <br />
+		
+    </div>
+
+</body>
+
+<!-- Import JavaScript -->
+
+	<!-- 取得使用者名稱
+	 <script src="src/GetMsg/getUserName.js"></script>
+	--> 
+	
+    <!-- 影像載入器 -->
+	 <script src="src/LoadVideo/LoadVideo.js"></script>
+	
+	<!-- 播放元件控制器 -->
+	<script src="src/HideShow/HideShowVideo.js"></script>
+
+	<!-- 觀眾網頁主程式 -->
+	<script src="src/Viewer_main.js"></script>	
+
+</center> 
+
+</html>
