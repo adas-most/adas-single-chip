@@ -4,7 +4,7 @@
 
 這是一個 node.js 專案
 
-它透過WEB RTC技術(https://github.com/webrtc)與網頁平台對攝影機（web camera）的影像進行擷取並存成影片檔
+它透過WEB RTC技術  (https://github.com/webrtc)  與網頁平台對攝影機（web camera）的影像進行擷取並存成影片檔
 
 使用方式只要透過指令
 
