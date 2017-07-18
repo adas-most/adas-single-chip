@@ -1,0 +1,5 @@
+radiatortemperature:88
+enginerpm:8000
+speed:92
+o2sensor:0.894917786121
+airflowmeter:48

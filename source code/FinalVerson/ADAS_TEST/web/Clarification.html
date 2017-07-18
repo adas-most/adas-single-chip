@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>ADAS - Clarification</title>
+  <link rel="stylesheet" href="./libs/bootstrap-3.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./libs/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./libs/awesome-bootstrap-checkbox-1.0.0-alpha.5/build.css" />
+  <style>
+  body {
+    /*font-family: 'cwTeXFangSong', serif;*/
+    font-size: 20px;
+    /*font-weight: 300;*/
+    color: #555;
+    line-height: 30px;
+    text-align: center;
+    margin-top: 60px;
+  }
+  
+  h1.text {
+    /*font-size:xx-large;*/
+    margin-bottom: 50px;
+    font-weight: bold;
+    color: #000;
+    text-shadow: #666 3px 6px 9px;
+  }
+  
+  .middle-container {
+    padding-right: 30px;
+    padding-left: 30px;
+  }
+  
+  .container-bg-gray {
+    padding-bottom: 30px;
+    padding-right: 30px;
+    padding-left: 30px;
+    background: rgba(235, 235, 235, 0.8);
+    border-top: 1px dotted #ddd;
+    border-bottom: 1px dotted #ddd;
+  }
+  
+  table th {
+    text-align: center;
+  }
+  </style>
+</head>
+
+<body>
+  <div class="container container-bg-gray">
+    <!-- top content - title -->
+    <div class="row">
+      <!-- Alert -->
+      <div style="display:none" class="" id="Alert_state">
+        <i class="fa fa-spinner fa-spin fa-fw" aria-hidden="true"></i>
+        <label id="Alert_label">
+          <strong>Info!</strong> 分析中...
+        </label>
+      </div>
+      <!-- /.Alert -->
+      <h1 class="text">待釐清事件</h1>
+    </div>
+    <!-- middle content -->
+    <div class="row">
+      <!-- left/upper -->
+      <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 middle-container">
+        <!-- vedio-->
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" style="border-style:solid;background:#bbb;">
+            <video id="webcam" autoplay style="width:100%;height:100%;">
+              <source src="/video" id="webmSource0" type="video/mp4">
+            </video>
+          </div>
+        </div>
+        <br>
+        <br>
+        <!-- OBD2 data display-->
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" style="overflow:auto;">
+            <table class="table table-responsive table-bordered table-hover" id="OBD2SensorTable" style="border-style:solid;background:#bbb;color:#000;">
+              <thead>
+                <tr>
+                  <th>OBD 感測資料</th>
+                  <th>數值(單位)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Sensor-1</th>
+                  <td nowrap>value-1</td>
+                </tr>
+                <tr>
+                  <th scope="row">Sensor-2</th>
+                  <td nowrap>value-2</td>
+                </tr>
+                <tr>
+                  <th scope="row">Sensor-3</th>
+                  <td nowrap>value-3</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- division horizontal line -->
+      <div class="hidden-lg hidden-md col-xs-12 col-sm-12 middle-container">
+        <br>
+        <hr style="background-color: #000;">
+        <br>
+      </div>
+      <!-- right/bottom -->
+      <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 middle-container">
+        <!-- keyword update -->
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+            <form class="form-horizontal" style="line-height: normal;">
+              <div class="form-group">
+                <label class="control-label col-sm-5" for="eventType">事件類型 :</label>
+                <div class="col-sm-5">
+                  <select class="form-control" id="eventType">
+                    <option value="" tabindex="3" selected disabled>請選擇</option>
+                    <option value="Type1">Type1</option>
+                    <option value="Type2">Type2</option>
+                  </select>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <br>
+        <!-- parameter modify-->
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" style="overflow:auto;">
+            <table class="table table-responsive table-bordered" id="ipmTable" style="border-style:solid;background:#bbb;color:#000;">
+              <thead>
+                <tr>
+                  <th nowrap>影像處理模組名稱</th>
+                  <th nowrap>參數待調整</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td nowrap>前車車燈辨識</td>
+                  <td nowrap>
+                    <div class="checkbox checkbox-success">
+                      <input class="styled" type="checkbox" id="Lamp">
+                      <label></label>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td nowrap>道路辨識</td>
+                  <td nowrap>
+                    <div class="checkbox checkbox-success">
+                      <input class="styled" type="checkbox" id="Road">
+                      <label></label>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td nowrap>車道偵測</td>
+                  <td nowrap>
+                    <div class="checkbox checkbox-success">
+                      <input class="styled" type="checkbox" id="Lane">
+                      <label></label>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td nowrap>車輛偵測</td>
+                  <td nowrap>
+                    <div class="checkbox checkbox-success">
+                      <input class="styled" type="checkbox" id="Vehicle">
+                      <label></label>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td nowrap>行人偵測</td>
+                  <td nowrap>
+                    <div class="checkbox checkbox-success">
+                      <input class="styled" type="checkbox" id="Pedestrian">
+                      <label></label>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td nowrap>路標辨識</td>
+                  <td nowrap>
+                    <div class="checkbox checkbox-success">
+                      <input class="styled" type="checkbox" id="RoadSign">
+                      <label></label>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td nowrap>前方物體距離估測</td>
+                  <td nowrap>
+                    <div class="checkbox checkbox-success">
+                      <input class="styled" type="checkbox" id="ForwardDistance">
+                      <label></label>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- ipmTable confirm/cancel button -->
+        <div class="row">
+          <div class="col-lg-offset-2 col-lg-4 col-lg-offset-2 col-md-4 col-xs-6 col-sm-6">
+            <button id="btn_ipmTable_confirm" class="btn btn-lg btn-success">確認</button>
+          </div>
+          <div class="col-lg-4 col-md-4 col-xs-6 col-sm-6">
+            <button id="btn_ipmTable_cancel" class="btn btn-lg btn-primary">取消</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<!-- Javascript -->
+<script src="./libs/jquery/jquery-3.1.1.min.js"></script>
+<script src="./libs/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="./libs/backstretch/jquery.backstretch.min.js"></script>
+<script src="./assets/js/ChineseText.js"></script>
+<script src="./assets/js/clarification.js"></script>
+<script src="./assets/js/tools.js"></script>
+<script>
+//Document is ready
+$(function() {
+  /*
+      Background slideshow
+  */
+  $.backstretch("./assets/img/background/ADAS.jpg");
+});
+</script>
+
+</html>

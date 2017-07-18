@@ -1,0 +1,10 @@
+DROP TABLE if exists test.eventlist;
+CREATE TABLE test.eventlist(eventid STRING,time STRING,position STRING,status STRING, Video STRING)
+DROP TABLE if exists test.sensor;
+CREATE TABLE test.sensor(eventid STRING,RadiatTemperatureor STRING,EngineRPM STRING,Speed STRING, O2Sensor STRING,AirFlowMeter STRING);
+DROP TABLE if exists test.treatment;
+CREATE TABLE test.treatment(eventid STRING,eventtype STRING,treatment STRING);
+DROP TABLE if exists test.parameter;
+CREATE TABLE test.parameter(eventid STRING,RoadDetection STRING,ForwardObjectDetection STRING,IntelligentHeadlight STRING,LaneDepartureDetection STRING);
+DROP TABLE if exists test.re;
+CREATE TABLE test.re(f STRING,eventid STRING)

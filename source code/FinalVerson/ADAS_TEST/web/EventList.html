@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>ADAS - Event List</title>
+  <link rel="stylesheet" href="./libs/bootstrap-3.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./libs/font-awesome-4.7.0/css/font-awesome.min.css">
+  <style>
+  body {
+    /*font-family: 'cwTeXFangSong', serif;*/
+    font-size: 20px;
+    font-weight: 300;
+    color: #555;
+    line-height: 30px;
+    text-align: center;
+    margin-top: 60px;
+  }
+  
+  h1.text {
+    /*font-size:xx-large;*/
+    font-weight: bold;
+    margin-bottom: 50px;
+    color: #000;
+    text-shadow: #666 3px 6px 9px;
+  }
+  
+  .container-bg-gray {
+    padding-bottom: 30px;
+    padding-right: 30px;
+    padding-left: 30px;
+    background: rgba(235, 235, 235, 0.8);
+    border-top: 1px dotted #ddd;
+    border-bottom: 1px dotted #ddd;
+  }
+  
+  table th {
+    text-align: center;
+  }
+  </style>
+</head>
+
+<body>
+  <div class="container container-bg-gray">
+    <!-- top content - title -->
+    <div class="row">
+      <h1 class="text">事件清單</h1>
+      <!-- <h1 class="text">Event List</h1> -->
+    </div>
+    <!-- parameter modify-->
+    <div class="row">
+      <div class="col-lg-offset-2 col-lg-8 col-md-offset-2 col-md-8 col-xs-12 col-sm-12" style="overflow:auto;">
+        <table class="table table-responsive table-bordered" id="eventListTable" style="border-style:solid;background:#bbb;color:#000;">
+          <thead>
+            <tr>
+              <th nowrap>#</th>
+              <th nowrap>事件發生日期</th>
+              <th nowrap>事件發生地點</th>
+              <th nowrap>作業</th>
+              <!-- <th nowrap>evnt</th>
+                                <th nowrap>Date</th>
+                                <th nowrap>Location</th>
+                                <th nowrap>Processing status</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td nowrap>date1</td>
+              <td nowrap>Loc1</td>
+              <td nowrap>Status1</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td nowrap>date2</td>
+              <td nowrap>Loc2</td>
+              <td nowrap>Status2</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- /container -->
+</body>
+<!-- Javascript -->
+<script src="./libs/jquery/jquery-3.1.1.min.js"></script>
+<script src="./libs/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="./libs/backstretch/jquery.backstretch.min.js"></script>
+<script src="./assets/js/eventlist.js"></script>
+<script>
+//Document is ready
+$(function() {
+  /*
+      Background slideshow
+  */
+  $.backstretch("./assets/img/background/ADAS.jpg");
+});
+</script>
+
+</html>

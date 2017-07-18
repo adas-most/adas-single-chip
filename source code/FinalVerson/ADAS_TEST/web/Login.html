@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>ADAS - Login</title>
+  <link rel="stylesheet" href="./libs/bootstrap-3.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./libs/font-awesome-4.7.0/css/font-awesome.min.css">
+  <style>
+  body {
+    /*font-family: 'cwTeXFangSong', serif;*/
+    font-size: 20px;
+    font-weight: 300;
+    color: #555;
+    line-height: 30px;
+    text-align: center;
+    margin-top: 60px;
+  }
+  
+  h1.text {
+    /*font-size:xx-large;*/
+    margin-bottom: 30px;
+    font-weight: bold;
+    color: #000;
+    text-shadow: #666 3px 6px 9px;
+  }
+  
+  .container-bg-gray {
+    padding: 0px 30px;
+    background: rgba(235, 235, 235, 0.8);
+  }
+  
+  .userInfoText {
+    text-align: left;
+  }
+  
+  .form-group {
+    padding-bottom: 30px;
+  }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-offset-4 col-lg-4 col-md-offset-4 col-md-4 col-xs-offset-3 col-xs-6 col-sm-offset-3 col-sm-6">
+        <div class="container-bg-gray">
+          <form id='userInfo'>
+            <div class='form-group row'>
+              <h1 class='text'>使用者登入</h1>
+            </div>
+            <div class='form-group row'>
+              <label for='userID' class="col-md-3 col-form-label">帳號</label>
+              <div class="col-md-9">
+                <input type='text' id='userID' class='form-control input-lg' placeholder='Identity' autocomplete='on' value='' required autofocus>
+              </div>
+            </div>
+            <div class='form-group row'>
+              <label for='userPW' class="col-md-3 col-form-label">密碼</label>
+              <div class="col-md-9">
+                <input type='password' id='userPW' class='form-control input-lg' placeholder='Password' value='' required>
+              </div>
+            </div>
+            <div class='form-group row'>
+              <div class="col-md-12">
+                <input class='btn btn-lg btn-primary' type='submit' value='登入'>
+              </div>
+            </div>
+            <div class='form-group row'>
+              <div style="display:none" class="" id="Alert_state">
+                <label id="Alert_label"></label>
+              </div>
+            </div>
+          </form>
+          <!-- /form -->
+        </div>
+      </div>
+    </div>
+
+</body>
+<!-- Javascript -->
+<script src="./libs/jquery/jquery-3.1.1.min.js"></script>
+<script src="./libs/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="./libs/backstretch/jquery.backstretch.min.js"></script>
+<script src="./assets/js/tools.js"></script>
+<script>
+//Document is ready
+$(function() {
+  /*
+      Background slideshow
+  */
+  $.backstretch("./assets/img/background/ADAS.jpg");
+
+  /* login */
+  $("#userInfo").submit(function()
+  {
+    $("#Alert_state").hide();
+
+    let userInfo = new Object();
+    userInfo.id = $("#userID").val();
+    userInfo.pw = $("#userPW").val();
+
+    console.log(userInfo);
+    Alert_Info("alert alert-info", "登入中...");
+	
+   $.post(
+		   "/login",
+	        JSON.stringify(userInfo)
+    )
+    .done(
+        function(data)
+        {
+			console.log(data);
+			if (data.state == "success")
+			{
+				if (data.authority == "user")
+					setTimeout('Redirect(0)', 100);
+				else if (data.authority == "root")
+					setTimeout('Redirect(1)', 100);
+			}
+			else{
+				location.reload() 
+			}
+		}
+    )
+    .fail( function(data) { console.log(data); } )
+
+    return false;
+  });
+});
+
+
+</script>
+
+</html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>ADAS - Processing</title>
+  <link rel="stylesheet" href="./libs/bootstrap-3.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./libs/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./libs/awesome-bootstrap-checkbox-1.0.0-alpha.5/build.css" />
+  <style>
+  body {
+    /*font-family: 'cwTeXFangSong', serif;*/
+    font-size: 18px;
+    /*font-weight: 300;*/
+    color: #555;
+    line-height: 30px;
+    text-align: center;
+    margin-top: 60px;
+  }
+  
+  h1.text {
+    /*font-size:xx-large;*/
+    margin-bottom: 50px;
+    font-weight: bold;
+    color: #000;
+    text-shadow: #666 3px 6px 9px;
+  }
+  
+  .middle-container {
+    padding-right: 30px;
+    padding-left: 30px;
+  }
+  
+  .container-bg-gray {
+    padding-bottom: 30px;
+    padding-right: 30px;
+    padding-left: 30px;
+    background: rgba(235, 235, 235, 0.8);
+    border-top: 1px dotted #ddd;
+    border-bottom: 1px dotted #ddd;
+  }
+  
+  .modal .btn-custom-size {
+    font-size: 16px;
+    width: 160px;
+  }
+  
+  table th {
+    text-align: center;
+  }
+  
+  table td {
+    text-align: center;
+  }
+  
+  table .input-modify {
+    color: #222;
+  }
+  
+  table .param-font-size {
+    font-size: 14px;
+  }
+  </style>
+</head>
+
+<body>
+  <div class="container container-bg-gray">
+    <!-- top content - title -->
+    <div class="row">
+      <!-- Alert -->
+      <div style="display:none" class="" id="Alert_state">
+        <i class="fa fa-spinner fa-spin fa-fw" aria-hidden="true"></i>
+        <label id="Alert_label">
+          <strong>Info!</strong> 分析中...
+        </label>
+      </div>
+      <!-- /.Alert -->
+      <h1 class="text">待處理事件</h1>
+    </div>
+    <!-- middle content -->
+    <div class="row">
+      <!-- left/upper -->
+      <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 middle-container">
+        <!-- vedio-->
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" style="border-style:solid;background:#bbb;">
+            <video id="webcam" autoplay style="width:100%;height:100%;">
+              <source src="/video" id="webmSource0" type="video/mp4">
+            </video>
+          </div>
+        </div>
+        <br>
+        <br>
+        <!-- OBD2 data display-->
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" style="overflow:auto;">
+            <table class="table table-responsive table-bordered table-hover" id="OBD2SensorTable" style="border-style:solid;background:#bbb;color:#000;">
+              <thead>
+                <tr>
+                  <th>OBD 感測資料(單位)</th>
+                  <th>數值</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Sensor-1</th>
+                  <td nowrap>value-1</td>
+                </tr>
+                <tr>
+                  <th scope="row">Sensor-2</th>
+                  <td nowrap>value-2</td>
+                </tr>
+                <tr>
+                  <th scope="row">Sensor-3</th>
+                  <td nowrap>value-3</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <br>
+        <br>
+        <!-- processing method data display -->
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" style="overflow:auto;">
+            <table class="table table-responsive table-bordered table-hover" id="tsTable" style="border-style:solid;background:#bbb;color:#000;">
+              <thead>
+                <tr>
+                  <th>處理方法陳述</th>
+                  <th>刪除</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">輪胎需要打氣</th>
+                  <td nowrap>
+                    <div class="checkbox checkbox-danger">
+                      <input class="styled" type="checkbox" id="03">
+                      <label></label>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">後視鏡需要更換</th>
+                  <td nowrap>
+                    <div class="checkbox checkbox-danger">
+                      <input class="styled" type="checkbox" id="04">
+                      <label></label>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- pmTable new/del button -->
+        <div class="row">
+          <div class="col-lg-offset-2 col-lg-4 col-lg-offset-2 col-md-4 col-xs-6 col-sm-6">
+            <button id="btn_tsTable_new_method" class="btn btn-lg btn-success">新增</button>
+            <!--  data-toggle="modal" data-target="#modal_AddNewMethod" -->
+          </div>
+          <div class="col-lg-4 col-md-4 col-xs-6 col-sm-6">
+            <button id="btn_tsTable_del_method" class="btn btn-lg btn-danger">刪除</button>
+          </div>
+        </div>
+      </div>
+      <!-- division horizontal line -->
+      <div class="hidden-lg hidden-md col-xs-12 col-sm-12 middle-container">
+        <br>
+        <hr style="background-color: #000;">
+        <br>
+      </div>
+      <!-- right/bottom -->
+      <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 middle-container">
+        <!-- event type -->
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+            <form class="form-horizontal" style="line-height: normal;">
+              <div class="form-group">
+                <label class="control-label col-sm-5" id="lb_SomeTypeList">事件類型 : 類型一</label>
+                <div class="col-sm-offset-2 col-sm-5">
+                  <button class="btn btn-info" id="btn_SomeTypeList">尋找相同事件類型</button><!-- --> 
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <br>
+        <!-- parameter modify-->
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" style="overflow:auto;">
+            <table class="table table-responsive table-bordered" id="ipmTable" style="border-style:solid;background:#bbb;color:#000;">
+              <thead>
+                <tr>
+                  <th nowrap>影像處理模組名稱</th>
+                  <th nowrap>參數</th>
+                  <th nowrap>數值</th>
+                  <th nowrap>修正值</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td nowrap>mod1</td>
+                  <td nowrap>param1</td>
+                  <td nowrap>value1</td>
+                  <td nowrap>
+                    <input type='text' value="modify1" class="form-control input-modify">
+                  </td>
+                </tr>
+                <tr>
+                  <td nowrap>mod2</td>
+                  <td nowrap>param2</td>
+                  <td nowrap>value2</td>
+                  <td nowrap>
+                    <input type='text' value="modify2" class="form-control input-modify">
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- ipmTable confirm/cancel button -->
+        <div class="row">
+          <div class="col-lg-offset-2 col-lg-4 col-lg-offset-2 col-md-4 col-xs-6 col-sm-6">
+            <button id="btn_ipmTable_confirm" class="btn btn-lg btn-success">確認</button>
+          </div>
+          <div class="col-lg-4 col-md-4 col-xs-6 col-sm-6">
+            <button id="btn_ipmTable_cancel" class="btn btn-lg btn-primary">取消</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /container -->
+  <!-- Add New Method modal -->
+  <div class="modal fade" id="modal_AddNewMethod" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h3 class="modal-title" id="exampleModalLabel">新增處理方法</h3>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-offset-2 col-md-8">
+                <form class="form-horizontal" id="form_AddNewMethod">
+                  <div class="form-group row">
+                    <label for="newMethodKeyWord" class="col-sm-5 form-control-label col-form-label" style="text-align:right;">查詢關鍵字 :</label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control" id="newMethodKeyWord" placeholder="keyword ..." required="true">
+                    </div>
+                    <br>
+                    <br>
+                  </div>
+                  <div class="form-group row">
+                    <table class="table table-responsive table-bordered table-hover" id="newtsTable" style="border-style:solid;background:#bbb;color:#000;">
+                      <thead>
+                        <tr>
+                          <th>既有處理方法</th>
+                          <th>加入</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row">輪胎需要打氣</th>
+                          <td nowrap>
+                            <div class="checkbox checkbox-success">
+                              <input class="styled" type="checkbox" id="01">
+                              <label></label>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="row">後視鏡需要更換</th>
+                          <td nowrap>
+                            <div class="checkbox checkbox-success">
+                              <input class="styled" type="checkbox" id="02">
+                              <label></label>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="col-lg-offset-2 col-lg-4 col-lg-offset-2 col-md-4 col-xs-6 col-sm-6">
+            <input type="button" class="btn btn-lg btn-info btn-custom-size" id="btn_create_method" value="建立新處理方法">
+          </div>
+          <div class="col-lg-4 col-md-4 col-xs-6 col-sm-6">
+            <input type="button" class="btn btn-lg btn-success btn-custom-size" data-dismiss="modal" aria-label="Close" id="btn_add_method" value="加入">
+          </div>
+          <div class="col-lg-offset-2 col-lg-8 col-lg-offset-2 col-md-8 col-xs-12 col-sm-12" style="text-align:left;" id="div_new_method_content" hidden="true">
+            <br>
+            <br>
+            <label for="newMethodContent" class="form-control-label">請輸入新處理方法內容:</label>
+            <textarea class="form-control" id="text_new_method_content" rows="5"></textarea>
+            <br>
+            <div style="text-align:right;">
+              <input type="button" class="btn btn-md btn-default" id="btn_new_method_confirm" value="確認">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Add Some Type List -->
+  <div class="modal fade" id="modal_SomeTypeList" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h3 class="modal-title" id="exampleModalLabel">相同事件類型清單</h3>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-offset-2 col-md-8">
+                <form class="form-horizontal" id="form_AddNewMethod">
+                  <div class="form-group row">
+                    <br>
+                    <table class="table table-bordered" id="someTypeTable" style="border-style:solid;background:#bbb;color:#000;">
+                      <thead>
+                        <tr>
+                          <th nowrap>#</th>
+                          <th nowrap>事件發生日期</th>
+                          <th nowrap>事件發生地點</th>
+                          <th nowrap>查看</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row">1</th>
+                          <td nowrap>date1</td>
+                          <td nowrap>Loc1</td>
+                          <td nowrap><a href="https://tw.yahoo.com/" target="_blank">Go</a></td>
+                        </tr>
+                        <tr>
+                          <th scope="row">2</th>
+                          <td nowrap>date2</td>
+                          <td nowrap>Loc2</td>
+                          <td nowrap><a href="https://www.youtube.com/" target="_blank">Go</a></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+<!-- Javascript -->
+<script src="./libs/jquery/jquery-3.1.1.min.js"></script>
+<script src="./libs/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="./libs/backstretch/jquery.backstretch.min.js"></script>
+<script src="./assets/js/ChineseText.js"></script>
+<script src="./assets/js/processing.js"></script>
+<script src="./assets/js/tools.js"></script>
+<script>
+var URLpath = "ADAS/";
+//Document is ready
+$(function() {
+  /*
+      Background slideshow
+  */
+  $.backstretch("./assets/img/background/ADAS.jpg");
+});
+</script>
+
+</html>
