@@ -1,0 +1,100 @@
+{
+  "monitoring_board_info": [
+    {
+      "attribute_name": "Timestamp",
+      "attribute_datatype": "datetime"
+    }
+  ],
+  "vehicle_info": [
+    {
+      "attribute_name": "Vehicle_Identification_Number",
+      "attribute_datatype": "string"
+    }
+  ],
+  "Exception_Event_info": [
+    {
+      "attribute_name": "Exception_Event_Number",
+      "attribute_datatype": "Event2"
+    },
+    {
+      "attribute_name": "Exception_Event_Type",
+      "attribute_datatype": "Type1"
+    }
+  ],
+  "video_clips_info": [
+    {
+      "attribute_name": "Video_File_Name",
+      "attribute_datatype": "string"
+    },
+    {
+      "attribute_name": "Video_URL",
+      "attribute_datatype": "string"
+    }
+  ],
+  "OBDII_info": [
+    {
+      "attribute_name": "vehicle engine speed ",
+      "attribute_datatype": 8000
+    },
+    {
+      "attribute_name": "vehicle speed",
+      "attribute_datatype": 83
+    },
+    {
+      "attribute_name": "engine intake air temperature ",
+      "attribute_datatype": 87
+    },
+    {
+      "attribute_name": "engine cooling water temperature ",
+      "attribute_datatype": 0.23484094858124047
+    },
+    {
+      "attribute_name": "air flow rate ",
+      "attribute_datatype": 71
+    }
+  ],
+  "OBU_info": [
+    {
+      "attribute_name": "acceleration ",
+      "attribute_datatype": "double"
+    },
+    {
+      "attribute_name": "Brake ",
+      "attribute_datatype": "double"
+    },
+    {
+      "attribute_name": "light ",
+      "attribute_datatype": "string"
+    },
+    {
+      "attribute_name": "steering wheel ",
+      "attribute_datatype": "double"
+    },
+    {
+      "attribute_name": "tire temperature ",
+      "attribute_datatype": "string"
+    },
+    {
+      "attribute_name": "tire pressure ",
+      "attribute_datatype": "double"
+    }
+  ],
+  "Original_parameters_info": [
+    {
+      "attribute_name": "Pavement detection module",
+      "attribute_datatype": "182,236,58,136,241,167,131"
+    },
+    {
+      "attribute_name": "front object detection module",
+      "attribute_datatype": "252,29,251,40,204,204,162"
+    },
+    {
+      "attribute_name": "smart head light module",
+      "attribute_datatype": "250,140,210"
+    },
+    {
+      "attribute_name": "road offset detection module",
+      "attribute_datatype": "135,49,88,67,79,66"
+    }
+  ]
+}
